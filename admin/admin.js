@@ -101,10 +101,30 @@ let activeKeyIndex = parseInt(localStorage.getItem(LS_KEY_INDEX) || "0");
 â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
 function adminInit() {
   if (typeof lucide !== 'undefined') lucide.createIcons();
+  autoSeedDefaults();
   checkAuth();
   setupLoginHandlers();
   setupModalHandlers();
   loadPlans();
+}
+
+/* Auto-seed safe defaults on first visit — only fills missing keys */
+function autoSeedDefaults() {
+  var settings = {};
+  try { settings = JSON.parse(localStorage.getItem('ar_settings') || '{}' ); } catch {}
+  var sc = false;
+  if (!settings.upi_id)      { settings.upi_id      = '6372843175@kotakbank';          sc = true; }
+  if (!settings.upi_name)    { settings.upi_name    = 'AuditReady.AI';                 sc = true; }
+  if (!settings.admin_email) { settings.admin_email = 'prakharmishra00000@gmail.com';  sc = true; }
+  if (sc) localStorage.setItem('ar_settings', JSON.stringify(settings));
+
+  var creds = {};
+  try { creds = JSON.parse(localStorage.getItem('ar_credentials') || '{}' ); } catch {}
+  var cc = false;
+  if (!creds.UPI_ID)      { creds.UPI_ID      = '6372843175@kotakbank';          cc = true; }
+  if (!creds.UPI_NAME)    { creds.UPI_NAME    = 'AuditReady.AI';                 cc = true; }
+  if (!creds.ADMIN_EMAIL) { creds.ADMIN_EMAIL = 'prakharmishra00000@gmail.com';  cc = true; }
+  if (cc) localStorage.setItem('ar_credentials', JSON.stringify(creds));
 }
 // Run immediately — DOM already parsed since script at bottom of body
 if (document.readyState === 'loading') {
