@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    AUDITREADY.AI - INTERACTIVE STATE & APP ENGINE
    ========================================================================== */
 
@@ -96,7 +96,7 @@
         ],
         "NIST": [
             { text: "Initialising NIST CSF 2.0 scanning engine...", type: "info" },
-            { text: "Loading IdentifyÃ¢â†’'ProtectÃ¢â†’'DetectÃ¢â†’'RespondÃ¢â†’'Recover function mappings...", type: "info" },
+            { text: "Loading Identify→Protect→Detect→Respond→Recover function mappings...", type: "info" },
             { text: "Performing asset discovery and exposure surface analysis...", type: "scan" },
             { text: "Auditing Acme_Vendor_Agrmt.pdf against ID.GV (Governance & Supply Chain Risk)...", type: "scan" },
             { text: "WARNING: Vendor risk profile not documented. Fails NIST ID.SC-2 supply chain risk management.", type: "warn" },
@@ -439,9 +439,9 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         showSimStep("ccm");
     });
 
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     // SHADOW DATA  - Animated Scan
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     const shadowScanBtn    = document.getElementById("shadow-scan-btn");
     const shadowScanStatus = document.getElementById("shadow-scan-status");
     const shadowResultsCard= document.getElementById("shadow-results-card");
@@ -478,18 +478,18 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
                     const flag = SHADOW_FLAGS[src];
                     if (flag === "flagged") {
                         statusEl.className = "source-status flagged";
-                        statusEl.innerHTML = "Ã¢Å¡Â Ã¯ Issues Found";
+                        statusEl.innerHTML = "⚠ Issues Found";
                     } else {
                         card.classList.add("done");
                         statusEl.className = "source-status done";
-                        statusEl.innerHTML = "Ã¢Å“... Clean";
+                        statusEl.innerHTML = "✓ Clean";
                     }
                     shadowScanStatus.textContent = `Scanned ${idx + 1} / 6 sources...`;
 
                     // When all done, show results
                     if (idx === SHADOW_SOURCES.length - 1) {
                         setTimeout(() => {
-                            shadowScanStatus.textContent = "Ã¢Å“... Scan complete - 7 critical issues detected across 4 sources";
+                            shadowScanStatus.textContent = "✓ Scan complete - 7 critical issues detected across 4 sources";
                             shadowResultsCard.style.display = "block";
                             shadowScanBtn.disabled = false;
                             shadowScanBtn.querySelector("span").textContent = "Re-Scan Sources";
@@ -514,9 +514,9 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         });
     }
 
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     // AUDITOR MODE  - Portal Generation
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     const generatePortalBtn = document.getElementById("generate-portal-btn");
     const portalResult      = document.getElementById("portal-result");
     const portalLinkUrl     = document.getElementById("portal-link-url");
@@ -573,9 +573,9 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         });
     }
 
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     // CCM MONITOR  - Manual Trigger
-    // Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬Ã¢"â‚¬
+    // ───────────────────────────────────────
     const ccmTriggerBtn = document.getElementById("ccm-trigger-btn");
     const ccmTimeline   = document.getElementById("ccm-timeline");
 
@@ -594,7 +594,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
                 newEvent.innerHTML = `
                     <div class="event-dot ok-dot"></div>
                     <div class="event-body">
-                        <p class="event-title">Ã¢Å“... Manual Scan Complete  - All Controls Checked</p>
+                        <p class="event-title">✓ Manual Scan Complete  - All Controls Checked</p>
                         <p class="event-detail">47 controls evaluated. 2 gaps remain open (Vendor NDA, Background Check). No new gaps detected since last scan.</p>
                         <span class="event-time">Just now, ${timeStr} IST</span>
                     </div>`;
@@ -757,7 +757,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
                 const data = await res.json();
                 const answer = (data?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim().toUpperCase();
                 if (answer.includes('IRRELEVANT')) irrelevant.push(file.name);
-            } catch { /* network error â€” skip check, allow file */ }
+            } catch { /* network error – skip check, allow file */ }
         }
         if (irrelevant.length > 0) {
             // Remove irrelevant files from activeFiles
@@ -767,7 +767,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
             });
             renderFileList();
             const names = irrelevant.join(', ');
-            showToast(`âš ï¸ Please upload relevant compliance documents. Not accepted: ${names}`, true);
+            showToast(`⚠️ Please upload relevant compliance documents. Not accepted: ${names}`, true);
         } else {
             showToast(`${files.length} file${files.length > 1 ? 's' : ''} uploaded. Ready to scan.`);
         }
@@ -801,9 +801,11 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
 
     // --- Plan limits config ---
     const PLAN_LIMITS = {
-        free:       { scansPerMonth: 3,  frameworks: ['SOC 2'],                                    downloadReport: false, docusign: false },
-        pro:        { scansPerMonth: 999, frameworks: ['SOC 2','GDPR','ISO 27001','HIPAA','PCI DSS','NIST'], downloadReport: true,  docusign: false },
-        enterprise: { scansPerMonth: 999, frameworks: ['SOC 2','GDPR','ISO 27001','HIPAA','PCI DSS','NIST'], downloadReport: true,  docusign: true  },
+        free:       { scansPerMonth: 3,   frameworks: ['SOC 2'],                                                downloadReport: false, docusign: false },
+        growth:     { scansPerMonth: 50,  frameworks: ['SOC 2','GDPR','ISO 27001'],                             downloadReport: true,  docusign: false },
+        scale:      { scansPerMonth: 999, frameworks: ['SOC 2','GDPR','ISO 27001','HIPAA','PCI DSS','NIST'],    downloadReport: true,  docusign: true  },
+        pro:        { scansPerMonth: 999, frameworks: ['SOC 2','GDPR','ISO 27001','HIPAA','PCI DSS','NIST'],    downloadReport: true,  docusign: false },
+        enterprise: { scansPerMonth: 999, frameworks: ['SOC 2','GDPR','ISO 27001','HIPAA','PCI DSS','NIST'],    downloadReport: true,  docusign: true  },
     };
 
     function getCurrentPlan() {
@@ -861,7 +863,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         const plan     = getCurrentPlan();
         const limits   = PLAN_LIMITS[plan] || PLAN_LIMITS.free;
         if (!limits.frameworks.includes(currentFramework)) {
-            showToast(`âš ï¸ ${currentFramework} is available on Pro & Enterprise plans. Upgrade to scan this framework.`, true);
+            showToast(`⚠️ ${currentFramework} is available on Pro & Enterprise plans. Upgrade to scan this framework.`, true);
             const session = JSON.parse(localStorage.getItem('ar_session') || 'null');
             if (!session) { window.AR_openSignIn && AR_openSignIn(); }
             return;
@@ -870,7 +872,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         // --- Plan gate: scan count limit ---
         const scanCount = getScanCount();
         if (scanCount >= limits.scansPerMonth) {
-            showToast(`âš ï¸ You've used all ${limits.scansPerMonth} free scans this month. Upgrade to Pro for unlimited scans.`, true);
+            showToast(`⚠️ You've used all ${limits.scansPerMonth} free scans this month. Upgrade to Pro for unlimited scans.`, true);
             return;
         }
 
@@ -929,7 +931,7 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
                 file.clauseType     = parsed.clauseType || 'indemnity';
 
                 const logType = parsed.status === 'Passed' ? 'ok' : (parsed.risk === 'Critical' ? 'danger' : 'warn');
-                addTerminalLog(`${parsed.status === 'Passed' ? 'PASS' : 'FAIL'}: ${file.name} â€” ${parsed.issue}`, logType);
+                addTerminalLog(`${parsed.status === 'Passed' ? 'PASS' : 'FAIL'}: ${file.name} – ${parsed.issue}`, logType);
 
                 if (window.AR_rotateGeminiKey) AR_rotateGeminiKey();
             } catch (err) {
@@ -982,7 +984,7 @@ Rules:
                 };
             }
         } catch {}
-        return { status: 'Failed', risk: 'Medium', issue: 'Could not parse AI response â€” manual review required', clauseType: 'indemnity' };
+        return { status: 'Failed', risk: 'Medium', issue: 'Could not parse AI response – manual review required', clauseType: 'indemnity' };
     }
 
     // Simulation fallback (used when no Gemini key or demo files)
@@ -1193,7 +1195,7 @@ Rules:
             docusignSendBtn.disabled = true;
 
             setTimeout(() => {
-                docusignSendBtn.querySelector("span").textContent = "Ã¢Å“Ã¯ Sent to DocuSign!";
+                docusignSendBtn.querySelector("span").textContent = "✓ Sent to DocuSign!";
                 docusignSendBtn.style.color = "#22c55e";
                 docusignSendBtn.style.borderColor = "rgba(34,197,94,0.4)";
 
@@ -1382,14 +1384,14 @@ Rules:
         });
     }
 
-// Run immediately â€” DOM already ready at this point
+// Run immediately – DOM already ready at this point
 })();
 
 /* ============================================================
    HELP & SUPPORT  - Brevo Email via Cloudflare Worker
    300 emails/DAY free (vs old EmailJS: 200/month)
    Worker URL: https://auditready-support.yoursubdomain.workers.dev
-   See: complete_credentials_guide.md Ã¢â†’' Cloudflare Worker section
+   See: complete_credentials_guide.md → Cloudflare Worker section
    ============================================================ */
 window.addEventListener("load", function initSupportForm() {
     // Worker URL reads from Admin â†’ System Setup â†’ ar_credentials (key: CLOUDFLARE_WORKER_URL)
@@ -1515,7 +1517,7 @@ window.addEventListener("load", function initSupportForm() {
 
             try {
                 if (WORKER_URL) {
-                    // Production path â€” Brevo via Cloudflare Worker (300 emails/day free)
+                    // Production path – Brevo via Cloudflare Worker (300 emails/day free)
                     const res = await fetch(WORKER_URL, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -1533,7 +1535,7 @@ window.addEventListener("load", function initSupportForm() {
                 qs.unshift({id:Date.now(),name:payload.from_name,email:payload.from_email,subject:payload.subject,msg:payload.message,time:new Date().toLocaleString('en-IN'),status:'open',attachments:supportFiles.map(function(f){return f.name;})});
                 localStorage.setItem('ar_support_queries',JSON.stringify(qs)); } catch {}
                 // Success
-                sendBtn.querySelector("span").textContent = "Ã¢Å“... Query Sent!";
+                sendBtn.querySelector("span").textContent = "✓ Query Sent!";
                 sendBtn.style.background = "var(--success)";
                 setTimeout(() => {
                     supportModal.classList.remove("active");
@@ -1811,7 +1813,7 @@ window.addEventListener("load", function initSupportForm() {
                     showError('si-error', 'Google sign-in failed: ' + err.message);
                 });
         } else {
-            // Demo Google auth â€” show a proper inline modal (prompt() blocked on HTTPS)
+            // Demo Google auth – show a proper inline modal (prompt() blocked on HTTPS)
             showGoogleDemoModal();
         }
     }
@@ -2187,7 +2189,7 @@ window.addEventListener("load", function initSupportForm() {
         }
     }
 
-    // Run immediately â€” DOM is already parsed since script is at bottom of <body>
+    // Run immediately – DOM is already parsed since script is at bottom of <body>
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAuth);
     } else {

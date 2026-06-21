@@ -1,11 +1,11 @@
-﻿/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ***********************************************************
    AuditReady.AI  - Admin Portal JS
    Auth &middot; Navigation &middot; Plan Editor &middot; System Setup &middot; API Keys
    All data persisted in localStorage, shared with main site
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+*********************************************************** */
 "use strict";
 
-/* â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ CONSTANTS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ──────────────── CONSTANTS ──────────────── */
 const ADMIN_EMAIL    = "prakharmishra00000@gmail.com";
 const ADMIN_PASSWORD = "prakhar@2025";
 const RESET_PIN      = "123";
@@ -18,7 +18,7 @@ const LS_CREDS       = "ar_credentials";
 const LS_QUERIES     = "ar_support_queries";
 const LS_PAYMENTS    = "ar_payments";
 
-/* â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ DEFAULT DATA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ──────────────── DEFAULT DATA ──────────────── */
 const DEFAULT_PLANS = {
   growth: {
     id:"growth", name:"Growth", price:299, currency:"&#x20B9;", billing:"monthly",
@@ -86,7 +86,7 @@ const FRAMEWORKS_DATA = [
   {id:"ccpa",   name:"CCPA",             desc:"California Consumer Privacy Act for data rights.",               plans:"Enterprise",  enabled:true},
 ];
 
-/* â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ STATE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ──────────────── STATE ──────────────── */
 let currentPanel   = "overview";
 let currentPage    = 1;
 const PAGE_SIZE    = 6;
@@ -96,9 +96,9 @@ let userPassword   = ADMIN_PASSWORD;
 let sidebarOpen    = true;
 let activeKeyIndex = parseInt(localStorage.getItem(LS_KEY_INDEX) || "0");
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    INIT
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 
 function updateActivityFeed() {
   var feed = document.getElementById('activity-feed');
@@ -166,9 +166,9 @@ if (document.readyState === 'loading') {
 }
 
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    AUTH
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function checkAuth() {
   const auth = sessionStorage.getItem(LS_AUTH);
   if (auth === "1") bootAdminApp();
@@ -324,7 +324,7 @@ function updateKPIs() {
 
   const totalUsers   = users.length;
   const activePlans  = users.filter(function(u){ var pr=null; try{pr=JSON.parse(localStorage.getItem('ar_plan_'+u.email.toLowerCase())||'null');}catch{} return pr && pr.plan && pr.plan!=='free' && Date.now()<pr.expiry; }).length;
-  const openTickets  = [...MOCK_SUPPORT, ...support].filter(q => q.status === 'open').length;
+  const openTickets  = support.filter(function(q){ return q.status === 'open'; }).length;
 
   // Revenue today: sum payments from last 24h
   const today = new Date();
@@ -343,9 +343,9 @@ function updateKPIs() {
   set('kpi-tickets-delta', openTickets  ? openTickets + ' need reply'  : 'All clear');
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    FORGOT PASSWORD
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function setupModalHandlers() {
   // Close buttons
   document.querySelectorAll(".close-modal-btn").forEach(btn => {
@@ -418,9 +418,9 @@ function confirmAction(title, msg, cb) {
   openModal("confirm-modal");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    NAVIGATION
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function setupNav() {
   document.querySelectorAll(".nav-item").forEach(item => {
     item.addEventListener("click", () => {
@@ -469,9 +469,9 @@ function toggleSidebar() {
   }
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    CHARTS
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildRevenueChart() {
   // Revenue data — read from localStorage payments, default to zeros until real data arrives
   const stored = JSON.parse(localStorage.getItem('ar_payments') || '[]');
@@ -517,9 +517,9 @@ function buildVisitorChart() {
   });
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    USERS TABLE
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildUsersTable(filter ="", planFilter ="") {
   const tbody = document.getElementById("users-tbody");
   if (!tbody) return;
@@ -531,7 +531,7 @@ function buildUsersTable(filter ="", planFilter ="") {
     return { name: u.name || u.email.split('@')[0], email: u.email, plan: planRaw ? planRaw.plan : 'free',
              joined: u.created ? new Date(u.created).toLocaleDateString('en-IN') : '--',
              expiry: planRaw && planRaw.expiry ? new Date(planRaw.expiry).toLocaleDateString('en-IN') : '--',
-             status: planRaw && Date.now() < planRaw.expiry ? 'active' : (planRaw ? 'expired' : 'free'), id: u.email };
+             status: u.suspended ? 'suspended' : (planRaw && Date.now() < planRaw.expiry ? 'active' : (planRaw ? 'expired' : 'free')), id: u.email };
   });
   if (filter)     users = users.filter(u => u.name.toLowerCase().includes(filter) || u.email.toLowerCase().includes(filter));
   if (planFilter) users = users.filter(u => u.plan === planFilter.toLowerCase());
@@ -591,7 +591,9 @@ function upgradeUser(i) {
 }
 function suspendUser(i, email) {
   confirmAction("Suspend User", `Suspend access for ${email}?`, () => {
-    MOCK_USERS[i].status = "suspended";
+    var accs=[]; try{accs=JSON.parse(localStorage.getItem('ar_accounts')||'[]');}catch{}
+    var u = accs.find(function(a){ return a.email.toLowerCase()===email.toLowerCase(); });
+    if (u) { u.suspended = true; localStorage.setItem('ar_accounts', JSON.stringify(accs)); }
     buildUsersTable();
     logAction("User Suspended", email);
     showToast(`${email} has been suspended.`, "warning");
@@ -599,16 +601,18 @@ function suspendUser(i, email) {
 }
 function deleteUser(i, name) {
   confirmAction("Delete User", `Permanently delete ${name}? This cannot be undone.`, () => {
-    MOCK_USERS.splice(i, 1);
+    var accs=[]; try{accs=JSON.parse(localStorage.getItem('ar_accounts')||'[]');}catch{}
+    accs.splice(i, 1);
+    localStorage.setItem('ar_accounts', JSON.stringify(accs));
     buildUsersTable();
     logAction("User Deleted", name);
     showToast(`${name} deleted.`, "error");
   });
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    PLANS EDITOR
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function loadPlans() {
   const stored = localStorage.getItem(LS_PLANS);
   plans = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_PLANS));
@@ -682,9 +686,9 @@ function savePlans() {
   showToast("Plans saved! Main site will reflect changes instantly.", "success");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    SUPPORT INBOX
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildSupportInbox() {
   // Read real queries from localStorage (written by main site support form)
   let allQueries = [];
@@ -692,6 +696,12 @@ function buildSupportInbox() {
 
   const inbox = document.getElementById("support-inbox");
   if (!inbox) return;
+  if (!allQueries.length) {
+    inbox.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;color:var(--text-dim);text-align:center;gap:.75rem"><i data-lucide="inbox" style="width:40px;height:40px;opacity:.3"></i><p style="font-size:.9rem">No support queries yet.<br>Queries from users will appear here.</p></div>`;
+    (typeof lucide!=='undefined'&&lucide.createIcons());
+    syncSupportBadge();
+    return;
+  }
   inbox.innerHTML = allQueries.map(q => `
     <div class="support-item ${selectedQuery===q.id?"active":""}" data-id="${q.id}" onclick="openQuery(${q.id})">
       <div class="support-item-header">
@@ -740,7 +750,9 @@ function resolveQuery(id) {
 function sendReply(id) {
   const msg = document.getElementById("reply-msg")?.value;
   if (!msg?.trim()) { showToast("Please enter a reply message.", "error"); return; }
-  showToast(`Reply sent to ${MOCK_SUPPORT.find(x=>x.id===id)?.email}!`, "success");
+  var allQ=[]; try{allQ=JSON.parse(localStorage.getItem('ar_support_queries')||'[]');}catch{}
+  var q = allQ.find(function(x){return x.id===id;});
+  showToast(`Reply sent to ${q ? q.email : 'user'}!`, "success");
   document.getElementById("reply-msg").value = "";
 }
 function deleteQuery(id) {
@@ -762,9 +774,9 @@ function syncSupportBadge() {
   if (badge) badge.textContent = open;
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    API KEY MANAGER (9 SLOTS)
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildApiKeyGrid() {
   const grid = document.getElementById("api-key-grid");
   if (!grid) return;
@@ -821,9 +833,9 @@ function getActiveGeminiKey() {
 }
 window.AR_getActiveGeminiKey = getActiveGeminiKey;
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    GEMINI KEY SLOTS IN SYSTEM SETUP
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildGeminiKeySlots() {
   const grid = document.getElementById("gemini-keys-grid");
   if (!grid) return;
@@ -838,9 +850,9 @@ function buildGeminiKeySlots() {
     </div>`).join("");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    FRAMEWORKS GRID
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildFrameworksGrid() {
   const grid = document.getElementById("frameworks-grid");
   if (!grid) return;
@@ -863,9 +875,9 @@ function saveFrameworks() {
   showToast("Framework settings saved.", "success");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    PAYMENTS TABLE
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function buildPaymentsTable() {
   let stored = [];
   try { stored = JSON.parse(localStorage.getItem(LS_PAYMENTS) || "[]"); } catch {}
@@ -902,9 +914,9 @@ function exportPayments() {
   showToast("Payments CSV exported.", "success");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    WEBSITE SETTINGS
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 (function initWebsiteSettings() {
   const saveSettingsBtn = document.getElementById("save-settings-btn");
   if (saveSettingsBtn) {
@@ -925,9 +937,9 @@ function exportPayments() {
   }
 })();
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    SYSTEM SETUP  - SAVE ALL CREDENTIALS
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 (function initSystemSetup() {
   const initBtn = document.getElementById("init-system-btn");
   const initBig = document.getElementById("init-big-btn");
@@ -1061,9 +1073,9 @@ function generateJWT() {
   showToast("JWT secret generated! Will hide in 3 seconds.", "info");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    AUDIT LOG
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 let auditLog = [...AUDIT_LOG_DATA];
 
 function buildAuditLog() {
@@ -1106,21 +1118,28 @@ function exportLog() {
   showToast("Audit log exported.", "success");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    REPORTS
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function exportCSV(type) {
   let csv ="";
   switch(type) {
-    case "users":
-      csv = ["Name,Email,Plan,Joined,Expiry,Status",...MOCK_USERS.map(u=>`${u.name},${u.email},${u.plan},${u.joined},${u.expiry},${u.status}`)].join("\n");
+    case "users": {
+      var udata=[]; try{udata=JSON.parse(localStorage.getItem('ar_accounts')||'[]');}catch{}
+      var enriched = udata.map(function(u){ var pr=null; try{pr=JSON.parse(localStorage.getItem('ar_plan_'+u.email.toLowerCase())||'null');}catch{} return {name:u.name||u.email.split('@')[0],email:u.email,plan:pr?pr.plan:'free',joined:u.created?new Date(u.created).toLocaleDateString('en-IN'):'--',expiry:pr&&pr.expiry?new Date(pr.expiry).toLocaleDateString('en-IN'):'--',status:u.suspended?'suspended':(pr&&Date.now()<pr.expiry?'active':(pr?'expired':'free'))}; });
+      csv = ["Name,Email,Plan,Joined,Expiry,Status",...enriched.map(u=>`${u.name},${u.email},${u.plan},${u.joined},${u.expiry},${u.status}`)].join("\n");
       break;
-    case "payments":
-      csv = ["User,Plan,Amount,Reference,Time,Status",...MOCK_PAYMENTS.map(p=>`${p.user},${p.plan},${p.amount},"${p.ref}",${p.time},${p.status}`)].join("\n");
+    }
+    case "payments": {
+      var pdata=[]; try{pdata=JSON.parse(localStorage.getItem('ar_payments')||'[]');}catch{}
+      csv = ["User,Plan,Amount,Reference,Time,Status",...pdata.map(p=>`${p.user},${p.plan},${p.amount},"${p.ref||''}",${p.time||''},${p.status||''}`)].join("\n");
       break;
-    case "support":
-      csv = ["Name,Email,Subject,Status,Time",...MOCK_SUPPORT.map(q=>`${q.name},${q.email},${q.subject},${q.status},${q.time}`)].join("\n");
+    }
+    case "support": {
+      var sdata=[]; try{sdata=JSON.parse(localStorage.getItem('ar_support_queries')||'[]');}catch{}
+      csv = ["Name,Email,Subject,Status,Time",...sdata.map(q=>`${q.name},${q.email},${q.subject},${q.status},${q.time}`)].join("\n");
       break;
+    }
     default:
       csv = "No data";
   }
@@ -1128,9 +1147,9 @@ function exportCSV(type) {
   showToast(`${type.charAt(0).toUpperCase()+type.slice(1)} report downloaded!`, "success");
 }
 
-/* â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*
+/* ******************************************************
    UTILITIES
-â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
+****************************************************** */
 function showToast(msg, type = "info") {
   const container = document.getElementById("toast-container");
   const toast = document.createElement("div");
