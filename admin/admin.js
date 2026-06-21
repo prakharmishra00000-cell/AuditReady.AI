@@ -284,9 +284,9 @@ function updateKPIs() {
   let users    = [];
   let payments = [];
   let support  = [];
-  try { users    = JSON.parse(localStorage.getItem('ar_users')    || '[]'); } catch {}
+  try { users    = JSON.parse(localStorage.getItem('ar_accounts') || '[]'); } catch {}
   try { payments = JSON.parse(localStorage.getItem('ar_payments') || '[]'); } catch {}
-  try { support  = JSON.parse(localStorage.getItem('ar_support')  || '[]'); } catch {}
+  try { support  = JSON.parse(localStorage.getItem('ar_support_queries') || '[]'); } catch {}
 
   const totalUsers   = users.length;
   const activePlans  = users.filter(u => u.plan && u.plan !== 'free').length;
@@ -444,10 +444,11 @@ function buildRevenueChart() {
   const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   const data   = days.map(() => 0);  // real data will populate as payments come in
   const labels = days;
-  const max    = Math.max(...data);
+  const max    = Math.max(...data) || 1;
   const wrap   = document.getElementById("revenue-chart");
   if (!wrap) return;
   wrap.innerHTML ="";
+  if (!max || max === 1) { wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:.85rem">No payment data yet</div>'; return; }
   data.forEach((val, i) => {
     const bar = document.createElement("div");
     bar.className = "mini-bar";
@@ -466,9 +467,10 @@ function buildVisitorChart() {
   const labels = document.getElementById("visitor-labels");
   if (!wrap) return;
   const data = Array.from({length:30}, () => 0); // zeros until real visitor analytics configured
-  const max  = Math.max(...data);
+  const max  = Math.max(...data) || 1;
   wrap.innerHTML ="";
-  labels.innerHTML ="";
+  if (labels) labels.innerHTML ="";
+  if (max === 1) { wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:.85rem">Connect analytics to see visitor data</div>'; return; }
   data.forEach((val, i) => {
     const bar = document.createElement("div");
     bar.className = "bar-lg";
@@ -487,7 +489,16 @@ function buildVisitorChart() {
 function buildUsersTable(filter ="", planFilter ="") {
   const tbody = document.getElementById("users-tbody");
   if (!tbody) return;
-  let users = MOCK_USERS;
+  // Read real users from localStorage (written by main site sign-up)
+  let stored = []; try { stored = JSON.parse(localStorage.getItem('ar_accounts') || '[]'); } catch {}
+  // Enrich with plan data
+  let users = stored.map(function(u) {
+    var planRaw = null; try { planRaw = JSON.parse(localStorage.getItem('ar_plan_' + u.email.toLowerCase()) || 'null'); } catch {}
+    return { name: u.name || u.email.split('@')[0], email: u.email, plan: planRaw ? planRaw.plan : 'free',
+             joined: u.created ? new Date(u.created).toLocaleDateString('en-IN') : '--',
+             expiry: planRaw && planRaw.expiry ? new Date(planRaw.expiry).toLocaleDateString('en-IN') : '--',
+             status: planRaw && Date.now() < planRaw.expiry ? 'active' : (planRaw ? 'expired' : 'free'), id: u.email };
+  });
   if (filter)     users = users.filter(u => u.name.toLowerCase().includes(filter) || u.email.toLowerCase().includes(filter));
   if (planFilter) users = users.filter(u => u.plan === planFilter.toLowerCase());
 
@@ -628,10 +639,9 @@ function savePlans() {
    SUPPORT INBOX
 â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â*â* */
 function buildSupportInbox() {
-  // Merge stored queries from main site with mock data
-  let stored = [];
-  try { stored = JSON.parse(localStorage.getItem(LS_QUERIES) || "[]"); } catch(e){}
-  const allQueries = [...stored, ...MOCK_SUPPORT];
+  // Read real queries from localStorage (written by main site support form)
+  let allQueries = [];
+  try { allQueries = JSON.parse(localStorage.getItem(LS_QUERIES) || "[]"); } catch(e){}
 
   const inbox = document.getElementById("support-inbox");
   if (!inbox) return;
@@ -648,7 +658,7 @@ function buildSupportInbox() {
 }
 
 function openQuery(id) {
-  const allQueries = MOCK_SUPPORT;
+  var allQueries = []; try { allQueries = JSON.parse(localStorage.getItem('ar_support_queries') || '[]'); } catch {}
   const q = allQueries.find(x => x.id === id);
   if (!q) return;
   selectedQuery = id;
@@ -676,8 +686,9 @@ function openQuery(id) {
 }
 
 function resolveQuery(id) {
-  const q = MOCK_SUPPORT.find(x => x.id === id);
-  if (q) { q.status = "resolved"; buildSupportInbox(); openQuery(id); showToast("Query marked as resolved.", "success"); }
+  var queries = []; try { queries = JSON.parse(localStorage.getItem('ar_support_queries') || '[]'); } catch {}
+  var q = queries.find(function(x) { return x.id === id; });
+  if (q) { q.status = "resolved"; localStorage.setItem('ar_support_queries', JSON.stringify(queries)); buildSupportInbox(); openQuery(id); showToast("Query marked as resolved.", "success"); }
 }
 function sendReply(id) {
   const msg = document.getElementById("reply-msg")?.value;
@@ -686,9 +697,10 @@ function sendReply(id) {
   document.getElementById("reply-msg").value = "";
 }
 function deleteQuery(id) {
-  confirmAction("Delete Query", "Remove this support query permanently?", () => {
-    const idx = MOCK_SUPPORT.findIndex(x => x.id === id);
-    if (idx > -1) MOCK_SUPPORT.splice(idx, 1);
+  confirmAction("Delete Query", "Remove this support query permanently?", function() {
+    var qdel=[]; try{qdel=JSON.parse(localStorage.getItem('ar_support_queries')||'[]');}catch{}
+    qdel = qdel.filter(function(x){return x.id !== id;});
+    localStorage.setItem('ar_support_queries', JSON.stringify(qdel));
     selectedQuery = null;
     document.getElementById("support-viewer").innerHTML = `<div class="empty-support-state"><i data-lucide="inbox"></i><p>Select a query to view</p></div>`;
     buildSupportInbox();
@@ -697,7 +709,8 @@ function deleteQuery(id) {
   });
 }
 function syncSupportBadge() {
-  const open = MOCK_SUPPORT.filter(q => q.status === "open").length;
+  var allQ=[]; try{allQ=JSON.parse(localStorage.getItem('ar_support_queries')||'[]');}catch{}
+  const open = allQ.filter(function(q){return q.status === "open";}).length;
   const badge = document.getElementById("support-badge");
   if (badge) badge.textContent = open;
 }
@@ -748,7 +761,7 @@ function forceRotate() {
   activeKeyIndex = (activeKeyIndex + 1) % keys.length;
   localStorage.setItem(LS_KEY_INDEX, activeKeyIndex);
   buildApiKeyGrid();
-  logAction(`API Key Rotated â→' Key #${activeKeyIndex+1}`, "Key Manager");
+  logAction(`API Key Rotated -> Key #${activeKeyIndex+1}`, "Key Manager");
   showToast(`Rotated to Key #${activeKeyIndex+1}`, "info");
 }
 
@@ -772,7 +785,7 @@ function buildGeminiKeySlots() {
     <div class="gemini-slot ${i===activeKeyIndex?"active":""}">
       <div class="gemini-slot-header">
         <span class="gem-label">KEY #${i+1}</span>
-        ${i===activeKeyIndex?'<span class="gem-active">â - ACTIVE</span>':""}
+        ${i===activeKeyIndex?'<span class="gem-active">&#9679; ACTIVE</span>':""}
       </div>
       <input type="password" class="admin-input" id="gem-key-${i}" placeholder="AIzaSy..." value="${keys[i]|| ""}">
     </div>`).join("");
@@ -836,7 +849,8 @@ function buildPaymentsTable() {
 function approvePay(user) { showToast(`Payment for ${user} approved. Plan activated.`, "success"); }
 function refundPay(user)  { confirmAction("Process Refund", `Issue a refund for ${user}?`, () => showToast(`Refund initiated for ${user}.`, "warning")); }
 function exportPayments() {
-  const csv = ["User,Plan,Amount,Reference,Time,Status", ...MOCK_PAYMENTS.map(p=>`${p.user},${p.plan},${p.amount},"${p.ref}",${p.time},${p.status}`)].join("\n");
+  var payments=[]; try{payments=JSON.parse(localStorage.getItem('ar_payments')||'[]');}catch{}
+  const csv = ["User,Plan,Amount,Reference,Time,Status", ...payments.map(function(p){return `${p.user},${p.plan},${p.amount},"${p.ref||''}",${ p.time||''  },${p.status||''}`; })].join("\n");
   downloadFile("payments.csv", csv, "text/csv");
   showToast("Payments CSV exported.", "success");
 }
@@ -946,13 +960,13 @@ function initializeSystem() {
   const bar = document.getElementById("setup-status-bar");
   if (bar) {
     bar.className = "setup-status-bar success";
-    bar.innerHTML = `<i data-lucide="check-circle"></i> âœ... System Initialized " - ${Object.keys(creds).length} credentials loaded. Main site is now fully configured. Last updated: ${new Date().toLocaleString()}`;
+    bar.innerHTML = `<i data-lucide="check-circle"></i> System Initialized - ${Object.keys(creds).length} credentials loaded. Main site is now fully configured. Last updated: ${new Date().toLocaleString()}`;
     (typeof lucide!=='undefined'&&lucide.createIcons());
   }
 
   logAction("System Initialized", `${Object.keys(creds).length} credentials saved`);
   buildApiKeyGrid();
-  showToast(`âœ... System initialized! ${Object.keys(creds).length} credentials saved and applied.`, "success");
+  showToast(`System initialized! ${Object.keys(creds).length} credentials saved and applied.`, "success");
 }
 
 function clearAllCredentials() {
