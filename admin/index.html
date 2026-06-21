@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AuditReady.AI "” Admin Portal</title>
+<title>AuditReady.AI Admin Portal</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -46,7 +46,7 @@
         <label>Password</label>
         <div class="input-icon-wrap">
           <i data-lucide="lock" class="input-icon"></i>
-          <input type="password" id="login-password" placeholder=""""""""""&mdash; autocomplete="current-password">
+          <input type="password" id="login-password" placeholder=&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; autocomplete="current-password">
           <button type="button" class="eye-btn" id="toggle-pw-btn"><i data-lucide="eye" id="eye-icon"></i></button>
         </div>
       </div>
@@ -149,7 +149,7 @@
       </nav>
       <div class="sidebar-section-label" style="margin-top:1.5rem">CONFIGURATION</div>
       <nav class="sidebar-nav">
-        <a class="nav-item setup-item" data-panel="system-setup"><i data-lucide="database"></i><span>System Setup</span><span class="nav-badge setup-badge">âš™ï</span></a>
+        <a class="nav-item setup-item" data-panel="system-setup"><i data-lucide="database"></i><span>System Setup</span><span class="nav-badge setup-badge">&#9881;</span></a>
       </nav>
       <div class="sidebar-footer">
         <button class="sidebar-logout-btn" id="sidebar-logout-btn"><i data-lucide="log-out"></i> Sign Out</button>
@@ -268,10 +268,10 @@
               <thead><tr><th>Country</th><th>Visitors</th><th>%</th></tr></thead>
               <tbody>
                 <tr><td> India</td><td>8,420</td><td>56.8%</td></tr>
-                <tr><td>Ÿ→ United States</td><td>2,180</td><td>14.7%</td></tr>
-                <tr><td>Ÿ→ United Kingdom</td><td>1,240</td><td>8.4%</td></tr>
-                <tr><td>Ÿ→ Singapore</td><td>890</td><td>6.0%</td></tr>
-                <tr><td>Ÿ→ Australia</td><td>620</td><td>4.2%</td></tr>
+                <tr><td>&#127482;&#127480; United States</td><td>2,180</td><td>14.7%</td></tr>
+                <tr><td>&#127468;&#127463; United Kingdom</td><td>1,240</td><td>8.4%</td></tr>
+                <tr><td>&#127480;&#127468; Singapore</td><td>890</td><td>6.0%</td></tr>
+                <tr><td>&#127462;&#127482; Australia</td><td>620</td><td>4.2%</td></tr>
               </tbody>
             </table>
           </div>
@@ -284,7 +284,7 @@
           <div><h2 class="panel-title">User Management</h2><p class="panel-sub">View, search, and manage all registered users.</p></div>
           <div class="panel-actions">
             <input type="text" class="search-input" id="user-search" placeholder="Search by email or name...">
-            <select class="select-sm" id="user-plan-filter"><option value="">All Plans</option><option>Free</option><option>Growth</option><option>Scale</option><option>Enterprise</option></select>
+            <select class="select-sm" id="user-plan-filter"><option value=&mdash;>All Plans</option><option>Free</option><option>Growth</option><option>Scale</option><option>Enterprise</option></select>
           </div>
         </div>
         <div class="table-card">
@@ -335,7 +335,7 @@
       <div class="panel hidden" id="panel-security">
         <div class="panel-header">
           <div><h2 class="panel-title">Security Center</h2><p class="panel-sub">Threat monitoring, failed logins, active sessions.</p></div>
-          <div class="panel-actions"><button class="btn-action cyan" onclick="showToast('Security scan complete "” no new threats.','success')"><i data-lucide="shield-check"></i> Run Scan</button></div>
+          <div class="panel-actions"><button class="btn-action cyan" onclick="showToast('Security scan complete - no new threats.','success')"><i data-lucide="shield-check"></i> Run Scan</button></div>
         </div>
         <div class="kpi-grid">
           <div class="kpi-card green"><div class="kpi-icon"><i data-lucide="shield-check"></i></div><div class="kpi-body"><p>Threat Level</p><h3>LOW</h3><span class="kpi-delta up">All clear</span></div></div>
@@ -519,7 +519,7 @@
       <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PANEL 14: SYSTEM SETUP â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
       <div class="panel hidden" id="panel-system-setup">
         <div class="panel-header">
-          <div><h2 class="panel-title">âš™ï System Setup</h2><p class="panel-sub">Configure all credentials. Click "Save &amp; Initialize System" to apply to the backend.</p></div>
+          <div><h2 class="panel-title">&#9881; System Setup</h2><p class="panel-sub">Configure all credentials. Click "Save &amp; Initialize System" to apply to the backend.</p></div>
           <div class="panel-actions">
             <button class="btn-action red" onclick="clearAllCredentials()"><i data-lucide="trash-2"></i> Clear All</button>
             <button class="btn-action cyan" onclick="testAllConnections()"><i data-lucide="zap"></i> Test All</button>
@@ -533,7 +533,7 @@
 
         <!-- 9 Gemini API Keys -->
         <div class="setup-section">
-          <div class="setup-section-header"><i data-lucide="brain"></i><div><h4>Gemini AI API Keys "” Rotation Pool (9 Slots)</h4><p>Keys rotate automatically when daily limit (1,500 req/day) is reached. Users never see the switch.</p></div></div>
+          <div class="setup-section-header"><i data-lucide="brain"></i><div><h4>Gemini AI API Keys &mdash; Rotation Pool (9 Slots)</h4><p>Keys rotate automatically when daily limit (1,500 req/day) is reached. Users never see the switch.</p></div></div>
           <div class="gemini-keys-grid" id="gemini-keys-grid">
             <!-- Injected by JS (9 slots) -->
           </div>
@@ -541,7 +541,7 @@
 
         <!-- Brevo Email -->
         <div class="setup-section">
-          <div class="setup-section-header"><i data-lucide="mail"></i><div><h4>Email "” Brevo SMTP</h4><p>300 emails/day free. Used for Help &amp; Support form.</p></div><span class="cred-badge">Free &middot; 300/day</span></div>
+          <div class="setup-section-header"><i data-lucide="mail"></i><div><h4>Email &mdash; Brevo SMTP</h4><p>300 emails/day free. Used for Help &amp; Support form.</p></div><span class="cred-badge">Free &middot; 300/day</span></div>
           <div class="cred-grid">
             <div class="form-group"><label>SMTP Host</label><input type="text" class="admin-input cred-input" data-key="BREVO_SMTP_HOST" placeholder="smtp-relay.brevo.com"></div>
             <div class="form-group"><label>SMTP Port</label><input type="text" class="admin-input cred-input" data-key="BREVO_SMTP_PORT" placeholder="587"></div>
@@ -553,7 +553,7 @@
 
         <!-- Firebase -->
         <div class="setup-section">
-          <div class="setup-section-header"><i data-lucide="database"></i><div><h4>Database + Auth "” Firebase</h4><p>50,000 reads/day + 20,000 writes/day free. Replaces Supabase.</p></div><span class="cred-badge">Free &middot; 50k reads/day</span></div>
+          <div class="setup-section-header"><i data-lucide="database"></i><div><h4>Database + Auth &mdash; Firebase</h4><p>50,000 reads/day + 20,000 writes/day free. Replaces Supabase.</p></div><span class="cred-badge">Free &middot; 50k reads/day</span></div>
           <div class="cred-grid">
             <div class="form-group"><label>API Key</label><input type="password" class="admin-input cred-input" data-key="FIREBASE_API_KEY" placeholder="AIzaSy..."></div>
             <div class="form-group"><label>Auth Domain</label><input type="text" class="admin-input cred-input" data-key="FIREBASE_AUTH_DOMAIN" placeholder="project.firebaseapp.com"></div>
