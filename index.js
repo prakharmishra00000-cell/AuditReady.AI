@@ -884,10 +884,10 @@ In alignment with NIST CSF 2.0 Function ID.SC (Supply Chain Risk Management), th
         const gemKey = window.AR_getActiveGeminiKey ? window.AR_getActiveGeminiKey() : '';
 
         if (gemKey && activeFiles.some(f => f._fileRef)) {
-            // â•â•â• REAL GEMINI AI SCAN â•â•â•
+            // ═══ REAL GEMINI AI SCAN ═══ 
             await runGeminiScan(gemKey);
         } else {
-            // â•â•â• SIMULATION FALLBACK (no key or default demo files) â•â•â•
+            // ═══ SIMULATION FALLBACK (no key or default demo files) ═══ 
             runSimulatedScan();
         }
     });
@@ -962,8 +962,8 @@ Respond in this EXACT JSON format (no markdown, no code blocks):
 }
 
 Rules:
-- If the document clearly meets ${framework} requirements â†’ status: Passed, risk: Low, clauseType: none
-- If missing required clauses or has violations â†’ status: Failed with specific issue
+- If the document clearly meets ${framework} requirements → status: Passed, risk: Low, clauseType: none
+- If missing required clauses or has violations → status: Failed with specific issue
 - Be specific to the document content, not generic
 - clauseType should match the type of fix needed`;
     }
@@ -1344,45 +1344,6 @@ Rules:
     });
 
 
-    if (openLoginBtn) {
-        openLoginBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            openLegalModal("login-modal");
-        });
-    }
-
-    if (loginSubmitBtn) {
-        loginSubmitBtn.addEventListener("click", () => {
-            if (!email || !email.includes("@")) {
-                showToast("Please enter a valid email address.", true);
-                return;
-            }
-            if (password.length < 6) {
-                showToast("Password must be at least 6 characters.", true);
-                return;
-            }
-            // Simulate sign-in success
-            closeLegalModal("login-modal");
-            showToast("Welcome back! Redirecting to your dashboard...");
-            setTimeout(() => { showSimulator(); }, 1200);
-        });
-    }
-
-    if (loginGoogleBtn) {
-        loginGoogleBtn.addEventListener("click", () => {
-            closeLegalModal("login-modal");
-            showToast("Google Sign-In connected! Loading your dashboard...");
-            setTimeout(() => { showSimulator(); }, 1000);
-        });
-    }
-
-    if (loginToDemoBtn) {
-        loginToDemoBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            closeLegalModal("login-modal");
-            showSimulator();
-        });
-    }
 
 // Run immediately – DOM already ready at this point
 })();
@@ -1394,7 +1355,7 @@ Rules:
    See: complete_credentials_guide.md → Cloudflare Worker section
    ============================================================ */
 window.addEventListener("load", function initSupportForm() {
-    // Worker URL reads from Admin â†’ System Setup â†’ ar_credentials (key: CLOUDFLARE_WORKER_URL)
+    // Worker URL reads from Admin → System Setup → ar_credentials (key: CLOUDFLARE_WORKER_URL)
     let _creds = {};
     try { _creds = JSON.parse(localStorage.getItem('ar_credentials') || '{}'); } catch {}
     const WORKER_URL  = _creds.CLOUDFLARE_WORKER_URL || _creds.WORKER_URL || '';  // Both keys supported
@@ -2027,7 +1988,7 @@ window.addEventListener("load", function initSupportForm() {
         if (p) {
             const daysLeft = Math.ceil((p.expiry - Date.now()) / 86400000);
             const planName = p.plan.charAt(0).toUpperCase() + p.plan.slice(1);
-            if (el('nud-plan')) el('nud-plan').textContent = '? ' + planName + ' Plan Â· ' + daysLeft + 'd left';
+            if (el('nud-plan')) el('nud-plan').textContent = '✅ ' + planName + ' Plan · ' + daysLeft + 'd left';
         } else {
             if (el('nud-plan')) el('nud-plan').textContent = 'Free Plan';
         }

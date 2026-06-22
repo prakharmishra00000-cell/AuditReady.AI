@@ -61,17 +61,9 @@ const DEFAULT_PLANS = {
   }
 };
 
-// Real user data comes from localStorage (ar_users key)
-// populated automatically when users register on the main site
-const MOCK_USERS = [];
-
-// Real payment data comes from localStorage (ar_payments key)
-// populated automatically when users submit UTR on the main site
-const MOCK_PAYMENTS = [];
-
-// Real support tickets come from localStorage (ar_support key)
-// populated automatically when users submit the Help & Support form
-const MOCK_SUPPORT = [];
+// Real user data comes from localStorage (ar_accounts key), populated automatically when users register on the main site.
+// Real payment data comes from localStorage (ar_payments key), populated automatically when users submit UTR on the main site.
+// Real support tickets come from localStorage (ar_support_queries key), populated automatically when users submit the Help & Support form.
 
 // Audit log starts fresh — entries added by admin actions during this session
 const AUDIT_LOG_DATA = [];
@@ -1196,5 +1188,6 @@ window.clearAllCredentials = clearAllCredentials;
 window.testAllConnections  = testAllConnections;
 window.generateJWT       = generateJWT;
 window.forceRotate       = forceRotate;
+
 
 
