@@ -1,0 +1,11 @@
+{
+  "name": "auditready-ai",
+  "version": "1.0.0",
+  "description": "AuditReady.AI compliance portal",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "start": "npx http-server -p 8080"
+  },
+  "dependencies": {}
+}
