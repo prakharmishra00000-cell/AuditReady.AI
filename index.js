@@ -1865,7 +1865,7 @@ window.addEventListener("load", function initSupportForm() {
         const creds = {};
         try { Object.assign(creds, JSON.parse(localStorage.getItem('ar_credentials') || '{}')); } catch {}
 
-        if (typeof firebase !== 'undefined' && creds.FIREBASE_API_KEY) {
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.auth && creds.FIREBASE_API_KEY) {
             // Real Firebase Google Auth
             if (!firebase.apps.length) {
                 firebase.initializeApp({
